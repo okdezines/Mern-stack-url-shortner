@@ -23,7 +23,18 @@ export const createUrl = async (
 export const getAllUrl = async (
   req: express.Request,
   res: express.Response
-) => {};
+) => {
+  try {
+    const shortUrl = await urlModel.find();
+    if (shortUrl.length < 0) {
+      res.status(404).send({ message: "short Url not found?" });
+    } else {
+      res.status(200).send(shortUrl);
+    }
+  } catch (error) {
+    res.status(500).send({ message: "Something went wrong?" });
+  }
+};
 export const getUrl = async (req: express.Request, res: express.Response) => {};
 export const deleteUrl = async (
   req: express.Request,
